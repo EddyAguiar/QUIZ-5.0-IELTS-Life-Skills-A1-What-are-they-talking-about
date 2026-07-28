@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🎧 IELTS Life Skills A1: What are they talking about?</title>
+<style>
+  /* ----- RESET & GLOBAL ----- */
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  body { background: linear-gradient(135deg, #f0f4f8 0%, #cfdfed 100%); color: #1e2a3e; line-height: 1.6; padding: 20px; min-height: 100vh; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 20px; }
+  h1 { color: #1e466e; margin-bottom: 10px; font-size: 2.1rem; }
+  .description { color: #2c5282; font-size: 1rem; margin-bottom: 12px; }
+
+  /* AUDIO SECTION */
+  .audio-section { background: #e1f0fa; padding: 18px; border-radius: 14px; margin-bottom: 20px; border: 1px solid #90cdf4; }
+  .audio-section p { font-weight: 700; margin-bottom: 12px; color: #2b6cb0; }
+  audio { width: 100%; border-radius: 12px; outline: none; }
+
+  /* IELTS Tips Panel */
+  .ielts-tips-panel { background: #fef9e6; border-left: 8px solid #e67e22; padding: 16px 20px; border-radius: 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }
+  .tip-card { flex: 1; min-width: 200px; background: #ffffffcc; border-radius: 20px; padding: 12px; backdrop-filter: blur(2px); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+  .tip-card h4 { color: #c4450c; margin-bottom: 8px; font-size: 1rem; border-bottom: 1px solid #ffd89a; display: inline-block; }
+  .tip-card p { font-size: 0.85rem; color: #2d3748; }
+  .badge { background: #2c7da0; color: white; border-radius: 30px; padding: 2px 10px; font-size: 0.7rem; font-weight: bold; display: inline-block; margin-bottom: 6px; }
+
+  /* TRANSCRIPT TOGGLE */
+  .toggle-reading { margin: 0 auto 18px auto; display: block; background: #2c7da0; color: white; padding: 10px 24px; border-radius: 40px; cursor: pointer; border: none; font-weight: 700; width: fit-content; transition: 0.2s; }
+  .toggle-reading:hover { background: #1f5e7e; transform: scale(1.01); }
+  .reading-text { background: white; border-radius: 12px; padding: 18px; margin-bottom: 18px; border-left: 6px solid #2c7da0; display: none; max-height: 550px; overflow-y: auto; }
+  .reading-text.show { display: block; }
+  .reading-text h2 { color: #2c7da0; margin-bottom: 12px; font-size: 1.4rem; }
+  .speaker-block { background: #f9fafc; margin: 16px 0; padding: 14px; border-radius: 14px; }
+  .eng { font-weight: 500; line-height: 1.6; color: #1f3a5f; }
+  .por { background: #eef2ff; margin-top: 10px; padding: 10px; border-radius: 12px; color: #1e466e; font-style: normal; font-size: 0.9rem; border-left: 3px solid #2c7da0; }
+  .keyword { font-weight: 700; color: #c4450c; background: #fff4e6; padding: 0 4px; border-radius: 4px; }
+
+  /* QUIZ CONTAINER */
+  .quiz-container { background: white; border-radius: 24px; box-shadow: 0 12px 28px rgba(0,0,0,0.1); overflow: hidden; margin-top: 10px; }
+  .progress-container { background: #f8fafc; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; }
+  .progress-bar { height: 8px; background: #e2e8f0; border-radius: 5px; flex-grow: 1; margin: 0 12px; overflow: hidden; }
+  .progress { height: 100%; background: linear-gradient(90deg, #2c7da0, #48bb78); width: 0%; transition: width 0.3s; }
+  .question-count { font-weight: 700; color: #2d3748; }
+  .question-container { padding: 20px 28px; }
+  .question-text { font-weight: 800; margin-bottom: 20px; font-size: 1.2rem; color: #1e466e; background: #f0f9ff; padding: 10px 14px; border-radius: 20px; }
+  .option { margin: 12px 0; padding: 12px 16px; background: #f9f9ff; border: 2px solid #e2e8f0; border-radius: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
+  .option:hover { background: #eef2ff; border-color: #90cdf4; transform: translateX(6px); }
+  .option input { margin-right: 14px; transform: scale(1.1); accent-color: #2c7da0; }
+  .option.correct { background: #d1fae5; border-color: #48bb78; color: #14532d; }
+  .option.incorrect { background: #ffe4e2; border-color: #fda4af; color: #991b1b; }
+  .feedback { padding: 12px 18px; border-radius: 16px; margin: 16px 0; display: none; font-weight: 500; }
+  .feedback.correct { background: #d4edda; border-left: 6px solid #2ecc71; color: #155724; }
+  .feedback.incorrect { background: #f8d7da; border-left: 6px solid #e74c3c; color: #721c24; }
+  .explanation { background: #f1f9fe; padding: 12px 18px; border-radius: 16px; margin-top: 12px; border-left: 5px solid #3498db; display: none; font-size: 0.95rem; }
+  .buttons { display: flex; justify-content: space-between; padding: 16px 28px; border-top: 1px solid #e2e8f0; }
+  button { padding: 10px 22px; background: #2c7da0; color: white; border: none; border-radius: 40px; cursor: pointer; font-weight: 700; transition: 0.15s; }
+  button:hover { background: #1e5a77; transform: translateY(-2px); }
+  button:disabled { background: #b9c8dc; cursor: not-allowed; transform: none; }
+  #restart-btn { background: #48bb78; }
+  .results { text-align: center; padding: 32px 20px; display: none; background: white; border-radius: 28px; }
+  .score { font-size: 1.8rem; margin: 20px 0; font-weight: 800; color: #1e466e; }
+  .circle-chart { width: 170px; margin: 0 auto; }
+  .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 3.8; }
+  .circle { fill: none; stroke-width: 2.8; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dasharray 0.6s ease; }
+  footer { margin-top: 30px; text-align: center; color: #2c5282; font-size: 0.85rem; }
+  footer a { color: #1e466e; font-weight: 600; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media (max-width: 700px) { .buttons { flex-direction: column; gap: 10px; } button { width: 100%; } .ielts-tips-panel { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎧 IELTS Life Skills A1: What are they talking about?</h1>
+    <p class="description">Listen to the audio about people's plans and free time activities. Answer 20 multiple-choice questions. Check the transcript with Portuguese translation.</p>
+  </header>
+
+  <!-- AUDIO SECTION -->
+  <div class="audio-section">
+    <p>🎵 <strong>LISTENING RESOURCE</strong></p>
+    <audio controls width="100%">
+      <source src="What are they talking about.mp4" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- TRANSCRIPT BUTTON + bilingual text -->
+  <button id="toggle-reading" class="toggle-reading" aria-expanded="false">📄 Show Full Transcript (English + Português)</button>
+  <div class="reading-text" id="reading-text">
+    <h2>📝 Complete Transcript + Tradução em Português</h2>
+    
+    <div class="speaker-block">
+      <div class="eng"><strong>🎤 SCRIPT 1:</strong><br>
+      I am a <span class="keyword">teacher at UKSE Language Centre</span>. I'm so excited today because <span class="keyword">next week</span> I'm going to take some time off from work and <span class="keyword">spend time with my sister</span>. We're going to <span class="keyword">go on a trip for 10 days</span> and visit some new places. We're going to take a break from our daily routine and have some fun together. I can't wait to <span class="keyword">make some great memories and take lots of pictures</span>.</div>
+      <div class="por"><strong>🇧🇷 Português:</strong><br>
+      <strong>GRAVAÇÃO 1:</strong><br>
+      Sou <span class="keyword">professora no UKSE Language Centre</span>. Estou muito animada hoje porque <span class="keyword">na próxima semana</span> vou tirar um tempo do trabalho e <span class="keyword">passar tempo com minha irmã</span>. Nós vamos <span class="keyword">fazer uma viagem de 10 dias</span> e visitar alguns lugares novos. Vamos fazer uma pausa na nossa rotina diária e nos divertir juntas. Mal posso esperar para <span class="keyword">criar ótimas memórias e tirar muitas fotos</span>.</div>
+    </div>
+
+    <div class="speaker-block">
+      <div class="eng"><strong>🎤 SCRIPT 2:</strong><br>
+      My free time is the best time of the day because I get to do things that I really love. After dinner on weekdays, I like to <span class="keyword">read for an hour</span>. But my favourite day is <span class="keyword">Saturday</span> because I wake up early at <span class="keyword">7am</span> and go for a <span class="keyword">morning walk in the park</span> near my house. It's so peaceful and quiet at that time of day. As for <span class="keyword">Sundays</span>, my brother and I enjoy <span class="keyword">going fishing in the afternoons</span>. We always have so much fun together and we catch some really big fish.</div>
+      <div class="por"><strong>🇧🇷 Português:</strong><br>
+      <strong>GRAVAÇÃO 2:</strong><br>
+      Meu tempo livre é a melhor hora do dia porque posso fazer coisas que realmente amo. Depois do jantar durante a semana, gosto de <span class="keyword">ler por uma hora</span>. Mas meu dia favorito é <span class="keyword">sábado</span> porque acordo cedo às <span class="keyword">7h</span> e vou para uma <span class="keyword">caminhada matinal no parque</span> perto da minha casa. É tão calmo e tranquilo nessa hora do dia. Quanto aos <span class="keyword">domingos</span>, meu irmão e eu gostamos de <span class="keyword">pescar à tarde</span>. Sempre nos divertimos muito juntos e pescamos peixes realmente grandes.</div>
+    </div>
+    <p style="margin-top:12px;">🎧 IELTS tip: Listen for specific details about plans, routines, days of the week, and times.</p>
+  </div>
+
+  <!-- QUIZ CONTAINER 20 questions -->
+  <div class="quiz-container">
+    <div class="progress-container">
+      <div class="question-count">Question <span id="current">1</span> of <span id="total">20</span></div>
+      <div class="progress-bar" aria-hidden="true"><div class="progress" id="progress"></div></div>
+    </div>
+    <div class="question-container">
+      <div class="question-text" id="question"></div>
+      <div class="options-container" id="options"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <div class="buttons">
+      <button id="prev-btn" disabled>◀ Previous</button>
+      <button id="next-btn">Next ▶</button>
+    </div>
+    <div class="results" id="results">
+      <h2>🎯 IELTS Life Skills A1 Practice Completed!</h2>
+      <svg class="circle-chart" viewBox="0 0 36 36" width="170" height="170">
+        <circle class="circle-bg" cx="18" cy="18" r="16"></circle>
+        <circle class="circle" cx="18" cy="18" r="16" stroke="#2c7da0" stroke-dasharray="0,100"></circle>
+        <g class="circle-chart-text"><text x="18" y="20.5" text-anchor="middle" font-size="8" fill="#2c7da0">0%</text></g>
+      </svg>
+      <div class="score" id="final-score">Score: 0/20</div>
+      <button id="restart-btn">⟳ Restart Practice</button>
+    </div>
+  </div>
+
+  <footer>
+    Inglês Profissional • Preparação para Exames • Cambridge • IELTS • TOEFL • Duolingo English Test (DET)<br>
+    <span class="copyright">© English VClass • Edson D'Aguiar</span>
+    • WhatsApp ➡️<a href="https://wa.me/5541991725009" target="_blank">• VClass English •</a>
+  </footer>
+
+</div>
+
+<script>
+  // 20 QUESTIONS based on the transcript
+  const quizData = [
+    { q: "1. What is the speaker's job in Script 1?", opts: ["A - A doctor", "B - A teacher", "C - A journalist"], ans: "B", exp: "Transcript: 'I am a <span class='keyword'>teacher</span> at UKSE Language Centre.'" },
+    { q: "2. Where does the speaker in Script 1 work?", opts: ["A - UKSE Language Centre", "B - A primary school", "C - A university"], ans: "A", exp: "Transcript: 'I am a teacher at <span class='keyword'>UKSE Language Centre</span>.'" },
+    { q: "3. When is the speaker in Script 1 going to take time off work?", opts: ["A - Next month", "B - Next week", "C - Tomorrow"], ans: "B", exp: "Transcript: 'I'm so excited today because <span class='keyword'>next week</span> I'm going to take some time off from work.'" },
+    { q: "4. Who is the speaker in Script 1 going to spend time with?", opts: ["A - Her brother", "B - Her sister", "C - Her parents"], ans: "B", exp: "Transcript: 'and <span class='keyword'>spend time with my sister</span>.'" },
+    { q: "5. How long is the trip in Script 1?", opts: ["A - 7 days", "B - 10 days", "C - 14 days"], ans: "B", exp: "Transcript: 'We're going to <span class='keyword'>go on a trip for 10 days</span>.'" },
+    { q: "6. What does the speaker in Script 1 want to do on the trip?", opts: ["A - Visit new places", "B - Stay at home", "C - Work online"], ans: "A", exp: "Transcript: 'and <span class='keyword'>visit some new places</span>.'" },
+    { q: "7. According to Script 1, what does the speaker want to take on the trip?", opts: ["A - Lots of books", "B - Lots of pictures", "C - Lots of food"], ans: "B", exp: "Transcript: 'I can't wait to make some great memories and <span class='keyword'>take lots of pictures</span>.'" },
+    { q: "8. What is the main idea of Script 1?", opts: ["A - Plans for a holiday trip", "B - Daily routine at work", "C - Favourite TV shows"], ans: "A", exp: "The speaker talks about taking time off work and going on a trip with her sister." },
+    { q: "9. According to Script 2, when is the best time of the day?", opts: ["A - Morning", "B - Free time", "C - Evening"], ans: "B", exp: "Transcript: 'My <span class='keyword'>free time</span> is the best time of the day.'" },
+    { q: "10. What does the speaker in Script 2 do after dinner on weekdays?", opts: ["A - Watch TV", "B - Read for an hour", "C - Go for a walk"], ans: "B", exp: "Transcript: 'After dinner on weekdays, I like to <span class='keyword'>read for an hour</span>.'" },
+    { q: "11. What is the speaker's favourite day in Script 2?", opts: ["A - Sunday", "B - Saturday", "C - Friday"], ans: "B", exp: "Transcript: 'But my favourite day is <span class='keyword'>Saturday</span>.'" },
+    { q: "12. What time does the speaker wake up on Saturdays?", opts: ["A - 6am", "B - 7am", "C - 8am"], ans: "B", exp: "Transcript: 'I wake up early at <span class='keyword'>7am</span>.'" },
+    { q: "13. What does the speaker do on Saturday mornings?", opts: ["A - Go fishing", "B - Go for a morning walk", "C - Read books"], ans: "B", exp: "Transcript: 'and go for a <span class='keyword'>morning walk in the park</span> near my house.'" },
+    { q: "14. Where does the speaker go for a walk on Saturdays?", opts: ["A - To the beach", "B - To the park", "C - To the city centre"], ans: "B", exp: "Transcript: 'morning walk in the <span class='keyword'>park</span> near my house.'" },
+    { q: "15. How does the speaker describe Saturday mornings?", opts: ["A - Busy and noisy", "B - Peaceful and quiet", "C - Tiring and stressful"], ans: "B", exp: "Transcript: 'It's so <span class='keyword'>peaceful and quiet</span> at that time of day.'" },
+    { q: "16. What does the speaker do on Sundays with his/her brother?", opts: ["A - Go shopping", "B - Go fishing", "C - Go hiking"], ans: "B", exp: "Transcript: 'As for Sundays, my brother and I enjoy <span class='keyword'>going fishing</span> in the afternoons.'" },
+    { q: "17. When do they go fishing on Sundays?", opts: ["A - In the mornings", "B - In the afternoons", "C - In the evenings"], ans: "B", exp: "Transcript: 'going fishing in the <span class='keyword'>afternoons</span>.'" },
+    { q: "18. What do they catch when they go fishing?", opts: ["A - Small fish", "B - Big fish", "C - No fish"], ans: "B", exp: "Transcript: 'and we catch some really <span class='keyword'>big fish</span>.'" },
+    { q: "19. How do they feel when they go fishing together?", opts: ["A - Bored", "B - They have fun", "C - They get tired"], ans: "B", exp: "Transcript: 'We always have so much <span class='keyword'>fun</span> together.'" },
+    { q: "20. Which activity is mentioned in BOTH scripts?", opts: ["A - Reading", "B - Walking in the park", "C - Taking a break from routine"], ans: "C", exp: "Script 1: 'take a break from our daily routine.' Script 2: free time activities. Both talk about breaking routine." }
+  ];
+
+  // DOM elements
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.getElementById('options');
+  const feedbackEl = document.getElementById('feedback');
+  const explanationEl = document.getElementById('explanation');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const restartBtn = document.getElementById('restart-btn');
+  const resultsDiv = document.getElementById('results');
+  const progressFill = document.getElementById('progress');
+  const currentSpan = document.getElementById('current');
+  const totalSpan = document.getElementById('total');
+  const finalScoreSpan = document.getElementById('final-score');
+  const circleSvg = document.querySelector('.circle');
+  const circleText = document.querySelector('.circle-chart-text text');
+  const readingDiv = document.getElementById('reading-text');
+  const toggleReadingBtn = document.getElementById('toggle-reading');
+
+  let currentQuestion = 0, score = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  function updateProgressBar() { progressFill.style.width = `${((currentQuestion+1)/quizData.length)*100}%`; }
+  function showFeedbackForCurrent() {
+    const selected = userAnswers[currentQuestion];
+    if (!selected) return;
+    const isCorrect = (selected === quizData[currentQuestion].ans);
+    feedbackEl.textContent = isCorrect ? '✓ Correct! Good listening.' : '✗ Not quite. Listen again or check the transcript.';
+    feedbackEl.className = isCorrect ? 'feedback correct' : 'feedback incorrect';
+    feedbackEl.style.display = 'block';
+    explanationEl.innerHTML = `<strong>📌 Explanation:</strong> ${quizData[currentQuestion].exp}`;
+    explanationEl.style.display = 'block';
+  }
+
+  function renderQuestion() {
+    const q = quizData[currentQuestion];
+    currentSpan.textContent = currentQuestion+1;
+    questionEl.textContent = q.q;
+    optionsEl.innerHTML = '';
+    const saved = userAnswers[currentQuestion];
+    q.opts.forEach((opt, idx) => {
+      const optLetter = opt.charAt(0);
+      const div = document.createElement('div'); div.className = 'option';
+      if (saved !== null) { if (optLetter === q.ans) div.classList.add('correct'); else if (optLetter === saved && saved !== q.ans) div.classList.add('incorrect'); }
+      const radio = document.createElement('input'); radio.type = 'radio'; radio.name = 'answer'; radio.value = optLetter; radio.id = `opt_${currentQuestion}_${idx}`;
+      if (saved !== null) radio.disabled = true; if (saved === optLetter) radio.checked = true;
+      const label = document.createElement('label'); label.htmlFor = radio.id; label.textContent = ` ${opt}`;
+      div.appendChild(radio); div.appendChild(label);
+      if (saved === null) radio.addEventListener('change', (e) => { if(e.target.checked){ userAnswers[currentQuestion] = optLetter; if(optLetter === q.ans) score++; renderQuestion(); updateNavButtons(); } });
+      optionsEl.appendChild(div);
+    });
+    if (saved !== null) showFeedbackForCurrent(); else { feedbackEl.style.display = 'none'; explanationEl.style.display = 'none'; }
+    updateNavButtons(); updateProgressBar();
+  }
+
+  function updateNavButtons() {
+    prevBtn.disabled = (currentQuestion === 0);
+    const isAnswered = (userAnswers[currentQuestion] !== null);
+    if (currentQuestion === quizData.length-1) {
+      nextBtn.textContent = 'Finish';
+      if (isAnswered) { nextBtn.removeEventListener('click', finishQuiz); nextBtn.addEventListener('click', finishQuiz, { once: true }); }
+      else nextBtn.removeEventListener('click', finishQuiz);
+    } else { nextBtn.textContent = 'Next'; nextBtn.removeEventListener('click', finishQuiz); }
+    nextBtn.disabled = !isAnswered;
+  }
+
+  function showNext() { if (currentQuestion < quizData.length-1) { currentQuestion++; renderQuestion(); } }
+  function showPrev() { if (currentQuestion > 0) { currentQuestion--; renderQuestion(); } }
+  function finishQuiz() {
+    document.querySelector('.question-container').style.display = 'none';
+    document.querySelector('.buttons').style.display = 'none';
+    resultsDiv.style.display = 'block';
+    const percent = (score/quizData.length)*100;
+    finalScoreSpan.textContent = `Score: ${score}/${quizData.length}`;
+    circleSvg?.setAttribute('stroke-dasharray', `${percent}, 100`);
+    if(circleText) circleText.textContent = `${Math.round(percent)}%`;
+    if(percent<50) circleSvg?.setAttribute('stroke','#e74c3c');
+    else if(percent<80) circleSvg?.setAttribute('stroke','#f39c12');
+    else circleSvg?.setAttribute('stroke','#2ecc71');
+  }
+  function restartQuiz() {
+    currentQuestion = 0; score = 0; userAnswers.fill(null);
+    document.querySelector('.question-container').style.display = 'block';
+    document.querySelector('.buttons').style.display = 'flex';
+    resultsDiv.style.display = 'none';
+    nextBtn.removeEventListener('click', finishQuiz);
+    renderQuestion();
+  }
+
+  prevBtn.addEventListener('click', showPrev);
+  nextBtn.addEventListener('click', () => { if(currentQuestion === quizData.length-1 && userAnswers[currentQuestion] !== null) finishQuiz(); else showNext(); });
+  restartBtn.addEventListener('click', restartQuiz);
+  toggleReadingBtn.addEventListener('click', () => { readingDiv.classList.toggle('show'); toggleReadingBtn.textContent = readingDiv.classList.contains('show') ? '📖 Hide Transcript' : '📄 Show Full Transcript (English + Português)'; });
+  totalSpan.textContent = quizData.length;
+  renderQuestion();
+  readingDiv.classList.remove('show');
+</script>
+</body>
+</html>
